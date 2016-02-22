@@ -7,9 +7,27 @@ let SuggestionList = React.createClass({
   render() {
     return (
       <ul>
-        <li>{this.interpolateSuggestion('Alexander Rafferty',this.props.query)}</li>
+        {this.filterSuggestions()}
       </ul>
     );
+  },
+
+  filterSuggestions() {
+    var data = [
+      'Alexander Rafferty',
+      'Jack Scott',
+      'Thomas Edison',
+      'Albert Einstein',
+      'Michael Jackson'
+    ];
+    var suggestions = [];
+    var query = this.props.query;
+    for (var i=0; i<data.length; i++) {
+      if (data[i].toLowerCase().indexOf(query.toLowerCase()) != -1) {
+        suggestions.push(<li>{this.interpolateSuggestion(data[i], query)}</li>);
+      }
+    }
+    return suggestions;
   },
 
   interpolateSuggestion(suggestion, query) {

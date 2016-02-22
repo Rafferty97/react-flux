@@ -19002,12 +19002,24 @@ let SuggestionList = React.createClass({
     return React.createElement(
       'ul',
       null,
-      React.createElement(
-        'li',
-        null,
-        this.interpolateSuggestion('Alexander Rafferty', this.props.query)
-      )
+      this.filterSuggestions()
     );
+  },
+
+  filterSuggestions() {
+    var data = ['Alexander Rafferty', 'Jack Scott', 'Thomas Edison', 'Albert Einstein', 'Michael Jackson'];
+    var suggestions = [];
+    var query = this.props.query;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].toLowerCase().indexOf(query.toLowerCase()) != -1) {
+        suggestions.push(React.createElement(
+          'li',
+          null,
+          this.interpolateSuggestion(data[i], query)
+        ));
+      }
+    }
+    return suggestions;
   },
 
   interpolateSuggestion(suggestion, query) {
