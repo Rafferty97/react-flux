@@ -7,15 +7,15 @@ var SearchBox = React.createClass({
 
   getInitialState: function() {
     return {
-      query: 'Hello'
+      query: ''
     };
   },
 
   render: function() {
     return (
-      <div>
+      <div className="searchbox">
         <input value={this.state.query} onChange={this._onChange} />
-        <SuggestionList query={this.state.query} />
+        <SuggestionList query={this.state.query.trim()} />
       </div>
     );
   },

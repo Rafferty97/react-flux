@@ -5,8 +5,12 @@ let React = require('react');
 let SuggestionList = React.createClass({
 
   render() {
+    var ulClasses = ['suggestion-list'];
+    if (this.props.query === '') {
+      ulClasses.push('hidden');
+    }
     return (
-      <ul>
+      <ul className={ulClasses}>
         {this.filterSuggestions()}
       </ul>
     );
@@ -18,7 +22,10 @@ let SuggestionList = React.createClass({
       'Jack Scott',
       'Thomas Edison',
       'Albert Einstein',
-      'Michael Jackson'
+      'Michael Jackson',
+      'David Rafferty',
+      'Amanda Rafferty',
+      'Taylor Laine'
     ];
     var suggestions = [];
     var query = this.props.query;
@@ -26,6 +33,9 @@ let SuggestionList = React.createClass({
       if (data[i].toLowerCase().indexOf(query.toLowerCase()) != -1) {
         suggestions.push(<li>{this.interpolateSuggestion(data[i], query)}</li>);
       }
+    }
+    if (suggestions.length === 0) {
+      suggestions.push(<li className="no-results">No results were found</li>);
     }
     return suggestions;
   },

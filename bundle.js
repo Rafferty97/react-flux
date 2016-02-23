@@ -9,7 +9,16 @@ var App = React.createClass({
   displayName: 'App',
 
   render: function () {
-    return React.createElement(SearchBox, null);
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'h1',
+        { className: 'page-title' },
+        'Star Wars API'
+      ),
+      React.createElement(SearchBox, null)
+    );
   }
 });
 
@@ -18966,16 +18975,16 @@ var SearchBox = React.createClass({
 
   getInitialState: function () {
     return {
-      query: 'Hello'
+      query: ''
     };
   },
 
   render: function () {
     return React.createElement(
       'div',
-      null,
+      { className: 'searchbox' },
       React.createElement('input', { value: this.state.query, onChange: this._onChange }),
-      React.createElement(SuggestionList, { query: this.state.query })
+      React.createElement(SuggestionList, { query: this.state.query.trim() })
     );
   },
 
@@ -18999,15 +19008,19 @@ let SuggestionList = React.createClass({
 
 
   render() {
+    var ulClasses = ['suggestion-list'];
+    if (this.props.query === '') {
+      ulClasses.push('hidden');
+    }
     return React.createElement(
       'ul',
-      null,
+      { className: ulClasses },
       this.filterSuggestions()
     );
   },
 
   filterSuggestions() {
-    var data = ['Alexander Rafferty', 'Jack Scott', 'Thomas Edison', 'Albert Einstein', 'Michael Jackson'];
+    var data = ['Alexander Rafferty', 'Jack Scott', 'Thomas Edison', 'Albert Einstein', 'Michael Jackson', 'David Rafferty', 'Amanda Rafferty', 'Taylor Laine'];
     var suggestions = [];
     var query = this.props.query;
     for (var i = 0; i < data.length; i++) {
@@ -19018,6 +19031,13 @@ let SuggestionList = React.createClass({
           this.interpolateSuggestion(data[i], query)
         ));
       }
+    }
+    if (suggestions.length === 0) {
+      suggestions.push(React.createElement(
+        'li',
+        { className: 'no-results' },
+        'No results were found'
+      ));
     }
     return suggestions;
   },
