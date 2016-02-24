@@ -5,9 +5,9 @@ let React = require('react');
 let SuggestionList = React.createClass({
 
   render() {
-    var ulClasses = ['suggestion-list'];
+    var ulClasses = 'suggestion-list';
     if (this.props.query === '') {
-      ulClasses.push('hidden');
+      ulClasses += ' hidden';
     }
     return (
       <ul className={ulClasses}>
